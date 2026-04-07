@@ -1,58 +1,59 @@
-# 🦾 NEXUS Robotic Arm Dashboard
+# 🦾 Dashboard NEXUS - Braccio Robotico
 
-Benvenuto nel pannello di controllo telemetrico e cinetico bidirezionale NEXUS per il braccio robotico (Ex KINETIC LAB).
-Questa web application costruita su Django (Backend) e HTML/Tailwind/JS nativi (Frontend) ti permette di inviare comandi asincroni e ricevere letture sensoristiche in tempo reale da un nodo hardware simulato (Raspberry Pi).
+Benvenuto nel pannello di controllo NEXUS per il braccio robotico.
+Questa applicazione web, sviluppata in Django (Backend) e HTML/Tailwind/JS nativi (Frontend), ti permette di inviare comandi e ricevere dati in tempo reale da un nodo hardware simulato (Raspberry Pi).
 
 ---
 
-## 🚀 Come Avviare il Sistema
+## 🚀 Come avviare il progetto
 
-Poiché l'applicazione web (Django) e il finto braccio robotico (Simulatore Python) sono due entità completamente distinte che comunicano tramite REST API, **hai bisogno di due finestre di terminale aperte contemporaneamente** per accendere sia il server che il robot vero e proprio.
+Poiché l'applicazione web e il braccio robotico (il simulatore Python) sono due componenti separati che comunicano tra loro, **dovrai aprire due finestre o schede del terminale** per poter avviare sia il server web che il robot vero e proprio.
 
-Entrambi i terminali devono essere aperti dentro la cartella radice del progetto, ovvero la cartella `Nexus_Robo_Arm`.
+Entrambi i terminali dovranno essere posizionati all'interno della cartella principale del progetto: `Nexus_Robo_Arm`.
 
-### 1. Avviare il Backend Django (Finestra Terminale 1)
-Questo è il server che serve le pagine HTML ad alta estetica e amministra tutto l'hub di comunicazione.
+### 1. Avviare il server web (Terminale 1)
+Questa è la finestra del terminale in cui gira l'interfaccia utente.
 
 1. Apri un terminale nella cartella `Nexus_Robo_Arm`.
-2. Digita questo comando per **attivare l'ambiente virtuale** (in cui abbiamo installato tutte le librerie Python compatibili):
+2. Attiva l'ambiente virtuale python digitando:
    ```bash
    source venv/bin/activate
    ```
-3. Appena vedi `(venv)` a sinistra del terminale, fai partire concretamente il server digitando:
+3. Fai partire il server web con il comando:
    ```bash
    python manage.py runserver 8000
    ```
 
-> ✅ **Il pannello web ora è online.** Puoi aprire Chrome/Safari e recarti all'indirizzo [http://127.0.0.1:8000/](http://127.0.0.1:8000/) sul tuo computer locale!
+> ✅ **L'interfaccia è pronta!** Ora puoi aprire il browser (Chrome, Firefox, Safari) e andare all'indirizzo [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-### 2. Avviare il "Raspberry Pi" Simulata (Finestra Terminale 2)
-Se ti limiti ad accendere Django, il sistema funziona ma è inanimato, nessun macchinario raccoglierà la "forza/coppia", i "gradi cinetici" o scaricherà i task. Lo script di simulazione (`pi_simulator.py`) è un robot che gira in background e genera telemetria vitale super realistica con l'api web.
+### 2. Avviare il robot simulato (Terminale 2)
+Se avvii solo il server web la dashboard funzionerà, ma non riceverà alcun dato né invierà comandi. Lo script di simulazione (`pi_simulator.py`) fa le veci del braccio robotico: si scambia in tempo reale l'angolazione dei motori e le letture di voltaggio con l'app web.
 
-1. Apri una **nuova scheda/nuova finestra del terminale** (rimanendo sempre puntato alla cartella `Nexus_Robo_Arm`).
-2. Anche qui devi accendere l'ambiente Python:
+1. Apri un **nuovo terminale o una nuova scheda** (sempre nella cartella `Nexus_Robo_Arm`).
+2. Attiva di nuovo l'ambiente virtuale:
    ```bash
    source venv/bin/activate
    ```
-3. Avvia lo script hardware del finto braccio:
+3. Avvia lo script che simula il braccio del robot:
    ```bash
    python pi_simulator.py
    ```
    
-> ✅ **Tutto Connesso!** Noto subito nel terminale scorrere messaggi ad alto ritmo del tipo `[SYNC OK] ... | Gripper: DISENGAGED...`. Significa che ha trovato la dashboard web e sta costantemente calcolando e interpolando i motori. Se ora tu ti rechi all'indirizzo [http://127.0.0.1:8000/](http://127.0.0.1:8000/) e sposti velocemente l'angolo di posizionamento dell'asse "J1" sul sito web della Dashboard da 140° a 360°, potrai osservare lo script nel Terminale 2 che riceve l'input muovere lentamente i giunti stampandoli man mano fino al raggiungimento di 360°, insieme all'aumento dinamico del Voltaggio/Torque che vedrai riflettersi dal vivo sulla Dashboard. Fantastico!
+> ✅ **Connesso!** Vedrai apparire messaggi come `[SYNC OK]` che ti confermano l'invio dei dati alla dashboard in tempo reale.
+> Prova adesso ad andare su [http://127.0.0.1:8000/](http://127.0.0.1:8000/): se sposti ad esempio l'asse "J1" e cambi la gradazione, potrai osservare sul terminale del robot i motori che si muovono lentamente per raggiungere i nuovi gradi, e sulla dashboard vedrai aggiornarsi il voltaggio della macchina man mano che compie il movimento.
 
 ---
 
-## 🛑 Come Fermare e Spegnere il Sistema
+## 🛑 Come spegnere tutto
 
-Fermare e spegnere tutto è un gesto semplicissimo e fulmineo usando la tua tastiera. Per arrestare definitivamente tutto devi letteralmente "Uccidere" le mansioni in esecuzione nei due terminali aperti.
+Per arrestare i due componenti, ti basterà fermare l'esecuzione nei due terminali che hai aperto precedentemente.
 
-1. **Torna sul Terminale/Scheda 1 (Quello in cui gira Django Web App)**
-   - Clicca col mouse all'interno della nera finestra o tab del terminale per attivarla.
-   - Sulla tastiera esegui la scorciatoia combinando **`CTRL + C`** e aspetta per una frazione di secondo. Questo lancerà un segnale noto come `SIGINT (Interrupt)` forzando il tuo computer ad arrestare il server Django definitivamente. Se ora aggiorni il browser web vedrai spaccarsi o scadere la connessione su Chrome.
+1. **Torna al Terminale 1 (Il server web)**
+   - Clicca sulla finestra per attivarla.
+   - Ripeti il comando **`CTRL + C`** sulla tastiera. Il server web si fermerà.
 
-2. **Torna sul Terminale/Scheda 2 (Quello dello Script Simulato pi_simulator)**
-   - Anche qui abbi l'accortezza di prendere il focus cliccando col mouse.
-   - Ripeti la sacra shortcut premendo **`CTRL + C`**. Il robot e la logica interpolarizzata finirà di stampare di botto gettando un `KeyboardInterrupt`.
+2. **Torna al Terminale 2 (Il robot)**
+   - Clicca sulla finestra.
+   - Premi **`CTRL + C`** sulla tastiera per interrompere il programma Python che lo gestisce.
 
-Il progetto Nexos Robo Arm e la porta 8000 del tuo iMac (macOS) sono tornati allo stato riposato. Niente consumerà più il tuo computer. Potrai infine chiudere con la spunta rossa le finestre.
+Ora hai spento tutto e le risorse del tuo computer sono state liberate. Puoi chiudere in tranquillità le finestre del terminale.

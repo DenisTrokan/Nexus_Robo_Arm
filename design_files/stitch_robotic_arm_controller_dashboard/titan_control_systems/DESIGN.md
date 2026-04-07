@@ -1,14 +1,14 @@
 # Design System Strategy: Robotic Command Interface
 
 ## 1. Overview & Creative North Star
-The Creative North Star for this system is **"The Kinetic Laboratory."** 
+The Creative North Star for this system is **"The Nexus Laboratory."** 
 
 This isn't a typical dashboard; it is a high-precision, tactical environment designed for an era where the digital and physical merge. While traditional industrial interfaces are rigid and literal, this system breaks the "template" look by using intentional asymmetry and depth-defying glassmorphism. It moves away from the flat, "web-app" aesthetic toward a sophisticated, HUD-inspired (Heads-Up Display) experience. 
 
 We utilize a hierarchy of semi-transparent layers, where the UI feels like it’s floating over the hardware telemetry. By prioritizing JetBrains Mono for all data-driven readouts, we establish a sense of technical authority—every character feels programmed and precise.
 
 ## 2. Colors: Depth and Luminance
-The palette is built on deep obsidian tones (`#0a0e14`) contrasted with high-vibrancy "neon" accents that guide the eye to critical kinetic controls.
+The palette is built on deep obsidian tones (`#0a0e14`) contrasted with high-vibrancy "neon" accents that guide the eye to critical nexus controls.
 
 ### The "No-Line" Rule
 Explicitly prohibit 1px solid borders for sectioning. Boundaries must be defined solely through background color shifts. A `surface-container-low` section sitting on a `background` provides all the separation needed. If elements feel lost, adjust the tonal tier, do not reach for a line.
